@@ -6,23 +6,32 @@ on:
       - master
 
 permissions:
+  id-token: write
   contents: read
 
 jobs:
   klocwork-codescan:
     runs-on: self-hosted
     steps:
+
+      #Checkout code
       - name: Checkout repository code
         uses: actions/checkout@v3
 
+     
+      #  Print GITHUB_RUN_ID and other info
       - name: Print run info
+        shell: bash
         run: |
-          echo "Run ID: $GITHUB_RUN_ID"
-          echo "Repository: ${{ github.repository }}"
-          echo "Workflow: $GITHUB_WORKFLOW"
+          echo "Ref name is $GITHUB_RUN_ID"
+          echo "Source is ${{ github.server_url }}/${{ github.repository }}"
+          echo "Subject is $GITHUB_WORKFLOW_REF|${{ github.run_id }}|${{ github.run_attempt }}|${{ github.run_number }}"
+          echo "Job is $GITHUB_JOB"
+          echo "Step id is ${{ steps.internal.id }}"
           curl checkip.amazonaws.com
 
-      - name: Run Klocwork scan
+      # Run Klocwork scan
+      - name: Klocwork scan
         uses: cloudbees-io-gha/perforce-klocwork-sast-publish@v1
         with:
           cloudbees-url: ${{ vars.CLOUDBEES_QA_API_URL }}
@@ -30,6 +39,6 @@ jobs:
           token: ${{ secrets.NEW_KLOCWORK_APP_TOKEN }}
           license-host: ${{ vars.KLOCWORK_LICENSE }}
           username: ${{ vars.KLOCWORK_USERNAME }}
-          project-name: test-cpp1-gha-1
+          project-name: test-cpp-1
           build-tool: make
           build-options: make -j14
