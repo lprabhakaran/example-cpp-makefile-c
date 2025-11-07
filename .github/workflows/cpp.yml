@@ -40,6 +40,6 @@ jobs:
           token: ${{ secrets.NEW_KLOCWORK_APP_TOKEN }}
           license-host: ${{ vars.KLOCWORK_LICENSE }}
           username: ${{ vars.KLOCWORK_USERNAME }}
-          project-name: test-cpp1-gha
+          project-name: test-cpp1-gha-1
           build-tool: make
           build-options: make -j14
