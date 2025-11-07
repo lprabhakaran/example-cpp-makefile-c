@@ -1,8 +1,8 @@
 # Compiler and flags
 CXX := g++
-CXXFLAGS := -Wall -Wextra -Wl,--no-as-needed
-LDFLAGS := -Lproject/lib
-LDLIBS := -lcom_err -lverto -lgssapi_krb5 -lk5crypto -lkrad -lkrb5 -lkrb5support
+CXXFLAGS := -Wall -Wextra
+LDFLAGS :=
+LDLIBS :=
 
 # Directories
 SRC_DIR := project/src
